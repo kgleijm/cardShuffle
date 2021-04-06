@@ -22,7 +22,6 @@ def getAverageDistance(deck):
     return avgDistance
 
 def conductExperiment(shuffleTechnique, amountOfShuffles, amountDecks):
-    averageDistancesUsingTopPackets = [getAverageDistance(mainDeck)]
     # set the bar
     expDecks = []
     expResults = []
@@ -44,12 +43,17 @@ def conductExperiment(shuffleTechnique, amountOfShuffles, amountDecks):
 
     # take average of each resultList
     for i in range(amountOfShuffles):
-        average = sum(expResults[i]) / amountOfShuffles
+        average = sum(expResults[i]) / amountDecks
         expResults[i] = average
 
     print(expResults)
+    plt.grid(True)
+    plt.title(shuffleTechnique.__name__ + "\n" + str(amountDecks) + " Decks " + str(amountOfShuffles) + " Shuffles")
+    plt.ylabel("Avg card distance")
+    plt.xlabel("Amount of shuffles")
     plt.plot(expResults)
     plt.show()
+    return expResults
 
 def getUnShuffledDeck():
     output = []
@@ -63,7 +67,7 @@ def getUnShuffledDeck():
 
 def shuffleOverhandTopPackets(inputDeck):
     smallestPacketSize = 5
-    largestPacketSize = 8
+    largestPacketSize = 15
     deck = inputDeck.copy()
     shuffledDeck = []
     while len(deck) > 0:
@@ -79,30 +83,16 @@ def shuffleOverhandTopPackets(inputDeck):
     inputDeck += shuffledDeck
 
 
-# initialization
-# mainDeck = getUnShuffledDeck()
-# print("mainDeck:")
-# print(mainDeck)
 
 
 
 
-conductExperiment(shuffleOverhandTopPackets, 100, 100)
+conductExperiment(shuffleOverhandTopPackets, 60, 1000)
 
+# resultList = conductExperiment(r.shuffle, 60, 1000)
+# average = sum(resultList)/len(resultList)
+# print("average: ", average)
 
-# # run experiment n times
-# experimentCount = 1
-# for experiment in range(experimentCount):
-#     mainDeck = getUnShuffledDeck()
-#     for i in range(1, 101):
-#         shuffleOverhandTopPackets(mainDeck, 5, 8)
-#         averageDistancesUsingTopPackets[i] += getAverageDistance(mainDeck)
-# for i in range(experimentCount):
-#     averageDistancesUsingTopPackets[i] = averageDistancesUsingTopPackets[i]/experimentCount
-
-#
-# print(mainDeck)
-# getAverageDistance(mainDeck)
 
 
 
